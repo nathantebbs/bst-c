@@ -1,10 +1,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
-#include "../lib/bst.h"
 #include "../lib/stack.h"
 
 Array *initArray(int size) {
@@ -169,7 +166,6 @@ void preOrderPrint(BSTNode *node) {
 
   printf("%d\n", node->key);
   preOrderPrint(node->left);
-  preOrderPrint(node->right);
 }
 
 void inOrderPrint(BSTNode *node) {
@@ -190,15 +186,6 @@ void postOrderPrint(BSTNode *node) {
   postOrderPrint(node->left);
   postOrderPrint(node->right);
   printf("%d\n", node->key);
-}
-
-int printSpaces(int count) {
-  int i = 0;
-  while (i < count) {
-    printf("-");
-    i++;
-  }
-  return i;
 }
 
 void treeNodePrint(BSTNode *root) {
@@ -235,15 +222,24 @@ void printLevelNodes(BSTNode *root, int height) {
   freeArray(ptr);
 }
 
+int printSpaces(int count) {
+  int i = 0;
+  while (i < count) {
+    printf(" ");
+    i++;
+  }
+  return i;
+}
+
 void treePrint(BSTNode *root) {
   int hTotal = treeHeight(root);
-  int width = (1 << hTotal) * 4; // Double the width for better spacing
-  int childOffset = width / 4;   // Initial offset for children
+  int width = (1 << hTotal) * 2;
+  int childOffset = width / 4;
 
   for (int i = 0; i <= hTotal; ++i) {
     Array *arr = nodeSearchHeight(i, root);
-    int levelWidth = width / (1 << i);              // Calculate level width
-    int nodeSpacing = levelWidth / (arr->size + 1); // Spacing between nodes
+    int levelWidth = width / (1 << i);
+    int nodeSpacing = levelWidth / (arr->size + 1);
 
     for (int j = arr->size - 1; j > -1; --j) {
       // Calculate actual offset based on child status
