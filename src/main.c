@@ -18,6 +18,7 @@ int main() {
   nodeInit(32, &child4);
   nodeInsert(&child4, &root);
 
+  // TRAVERSALS
   printf("Traversals (pre, in, post): \n");
   printf("\npreOrderPrint: \n");
   preOrderPrint(&root);
@@ -33,13 +34,13 @@ int main() {
   treeLevelPrint(&root);
 
   printf("\n\nFIND HEIGHT 2: \n");
-  printLevelNodes(&root, 2);
+  printLevelNodes(2, &root);
 
   printf("\n\nFIND HEIGHT 1: \n");
-  printLevelNodes(&root, 1);
+  printLevelNodes(1, &root);
 
   printf("\n\nFIND HEIGHT 0: \n");
-  printLevelNodes(&root, 0);
+  printLevelNodes(0, &root);
 
   printf("\n\nTREE ASCII: \n");
   treePrint(&root);
