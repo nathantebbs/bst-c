@@ -9,19 +9,20 @@ typedef struct BSTNode {
 	bool isRightChild;
 	int key;
 	int height;
+	int curNodeX;
 	struct BSTNode *left;
 	struct BSTNode *right;
 } BSTNode;
 
 typedef struct {
-  int *array;
+	BSTNode **array;
   size_t size;
-  int used;
 } Array;
 
 
 
 void nodeInit(int key, BSTNode *node);
+void freeArray(Array *arr);
 BSTNode *nodeSearch(int key, BSTNode *node);
 BSTNode *nodeInsert(BSTNode *node, BSTNode *root);
 int nodeHeight(BSTNode *root, BSTNode *node, int heightStart);
@@ -35,6 +36,7 @@ void treeNodePrint(BSTNode *root);
 Array *nodeSearchHeight(int height, BSTNode *root);
 void treeLevelPrint(BSTNode *root);
 void treePrint(BSTNode *root);
+void printLevelNodes(BSTNode *root, int height);
 
 
 #endif

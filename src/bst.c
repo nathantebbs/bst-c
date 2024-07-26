@@ -13,14 +13,13 @@ Array *initArray(int size) {
     printf("Array is null");
     return NULL;
   }
-  Arr->array = (int *)malloc(size * sizeof(int));
+  Arr->array = (BSTNode **)malloc(size * sizeof(BSTNode *));
   if (Arr->array == NULL) {
     printf("Arr->array = NULL");
     free(Arr);
     return NULL;
   }
   Arr->size = size;
-  Arr->used = 0;
   return Arr;
 }
 
@@ -34,6 +33,7 @@ void nodeInit(int key, BSTNode *node) {
   node->height = 0;
   node->isLeftChild = false;
   node->isRightChild = false;
+  node->curNodeX = 0;
   node->left = NULL;
   node->right = NULL;
 }
@@ -86,7 +86,7 @@ Array *nodeSearchHeight(int height, BSTNode *root) {
   while (!isEmpty(stack)) {
     BSTNode *node;
     node = pop(stack);
-    ptr->array[count] = node->key;
+    ptr->array[count] = node;
     count++;
   }
   freeStack(stack);
@@ -238,31 +238,40 @@ void treeLevelPrint(BSTNode *root) {
   for (int i = 0; i <= hTotal; i++) {
     Array *ptr = nodeSearchHeight(i, root);
     for (int j = 0; j < ptr->size; j++) {
-      printf("%d: %d\n", i, ptr->array[j]);
+      printf("%d: %d\n", i, ptr->array[j]->key);
     }
   }
 }
 
+void printLevelNodes(BSTNode *root, int height) {
+  Array *ptr = nodeSearchHeight(height, root);
+  for (int i = ptr->size - 1; i > -1; --i) {
+    if (i == 0) {
+      printf("%d", ptr->array[i]->key);
+    } else {
+      printf("%d->", ptr->array[i]->key);
+    }
+  }
+  printf("\n");
+  freeArray(ptr);
+}
+
 void treePrint(BSTNode *root) {
   int hTotal = treeHeight(root);
-  int width = (1 << hTotal) * 2;
-  int curNodeX = width / 2;
-  int spacesPrinted = 0;
-  int spacesRem;
-  printf("width: %d\n", width);
-  printf("hTotal: %d\n", hTotal);
-
-  // spacesPrinted = printSpaces(width / 2);
-  // spacesRem = width - spacesPrinted;
-  // printf("%d", root->key);
-  // spacesRem = width - spacesPrinted;
-  // spacesPrinted = printSpaces(spacesRem);
-  // printf("\n");
+  int width = (1 << hTotal) * 4; // Double the width for better spacing
+  int childOffset = width / 4;   // Initial offset for children
 
   for (int i = 0; i <= hTotal; ++i) {
     Array *arr = nodeSearchHeight(i, root);
+    int levelWidth = width / (1 << i);              // Calculate level width
+    int nodeSpacing = levelWidth / (arr->size + 1); // Spacing between nodes
+
     for (int j = arr->size - 1; j > -1; --j) {
-      printf("%d->", arr->array[j]);
+      // Calculate actual offset based on child status
+      int offset = nodeSpacing * (j + 1) +
+                   (arr->array[j]->isRightChild ? childOffset : -childOffset);
+      printSpaces(offset);
+      printf("%d", arr->array[j]->key);
     }
     printf("\n");
   }

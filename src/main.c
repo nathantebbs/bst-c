@@ -36,14 +36,13 @@ int main() {
   treeNodePrint(&root);
 
   printf("\n\nFIND HEIGHT 2: \n");
-  Array *h2Arr = nodeSearchHeight(2, &root);
-  printf("%d\n", h2Arr->array[0]);
+  printLevelNodes(&root, 2);
 
   printf("\n\nFIND HEIGHT 1: \n");
-  nodeSearchHeight(1, &root);
+  printLevelNodes(&root, 1);
 
   printf("\n\nFIND HEIGHT 0: \n");
-  nodeSearchHeight(0, &root);
+  printLevelNodes(&root, 0);
 
   printf("\n\nTREE PRINT TESTING: \n");
   treePrint(&root);
