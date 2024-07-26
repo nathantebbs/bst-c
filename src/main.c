@@ -23,7 +23,7 @@ int main() {
   nodeInsert(&child4, &root);
 
   printf("\npreOrderPrint: \n");
-  preOrderPrint(&root, 256);
+  preOrderPrint(&root);
 
   printf("\n\nInOrderPrint: \n");
   inOrderPrint(&root);

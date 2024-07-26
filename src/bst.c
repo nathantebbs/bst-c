@@ -162,36 +162,14 @@ void nodePrint(BSTNode *node) {
          node->isLeftChild);
 }
 
-char *preOrderPrint(BSTNode *node, size_t bufSize) {
+void preOrderPrint(BSTNode *node) {
   if (node == NULL) {
-    return NULL;
+    return;
   }
 
-  char buf[bufSize];
-  char *target = buf;
-
-  Stack *stack = stackInit(100);
-
-  push(stack, node);
-
-  while (!isEmpty(stack)) {
-    BSTNode *curNode = pop(stack);
-    target += sprintf(target, "%d\n", curNode->key);
-    printf("%d\n", curNode->key);
-
-    if (curNode->right) {
-      push(stack, curNode->right);
-    }
-
-    if (curNode->left) {
-      push(stack, curNode->left);
-    }
-  }
-
-  printf("\n\nbuffer pre order: \n");
-  printf("%s\n", buf);
-  freeStack(stack);
-  return target;
+  printf("%d\n", node->key);
+  preOrderPrint(node->left);
+  preOrderPrint(node->right);
 }
 
 void inOrderPrint(BSTNode *node) {
@@ -240,6 +218,7 @@ void treeLevelPrint(BSTNode *root) {
     for (int j = 0; j < ptr->size; j++) {
       printf("%d: %d\n", i, ptr->array[j]->key);
     }
+    freeArray(ptr);
   }
 }
 
@@ -274,5 +253,7 @@ void treePrint(BSTNode *root) {
       printf("%d", arr->array[j]->key);
     }
     printf("\n");
+
+    freeArray(arr);
   }
 }

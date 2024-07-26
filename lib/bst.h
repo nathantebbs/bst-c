@@ -28,7 +28,7 @@ BSTNode *nodeInsert(BSTNode *node, BSTNode *root);
 int nodeHeight(BSTNode *root, BSTNode *node, int heightStart);
 int treeHeight(BSTNode *node);
 void nodePrint(BSTNode *node);
-char *preOrderPrint(BSTNode *node, size_t bufSize);
+void preOrderPrint(BSTNode *node);
 void inOrderPrint(BSTNode *node);
 void postOrderPrint(BSTNode *node);
 int printSpaces(int count);
